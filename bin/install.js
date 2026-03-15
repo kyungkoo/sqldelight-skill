@@ -38,9 +38,17 @@ function parseArgs(argv) {
     if (arg === "--dest") {
       options.dest = argv[i + 1];
       i += 1;
+      if (!options.dest) {
+        console.error("--dest requires a value");
+        process.exit(1);
+      }
     } else if (arg === "--name") {
       options.name = argv[i + 1];
       i += 1;
+      if (!options.name) {
+        console.error("--name requires a value");
+        process.exit(1);
+      }
     } else if (arg === "--force") {
       options.force = true;
     } else if (arg === "--dry-run") {
@@ -66,13 +74,21 @@ function parseArgs(argv) {
 }
 
 function installClaudeCode(options, repoRoot) {
-  if (options.dest || options.name !== "sqldelight") {
-    console.error("--dest and --name cannot be used together with --claude-code");
+  if (options.dest) {
+    console.error("--dest cannot be used with --claude-code");
+    process.exit(1);
+  }
+  if (options.name !== "sqldelight") {
+    console.error("--name cannot be used with --claude-code");
     process.exit(1);
   }
 
   const sourceDir = path.join(repoRoot, "claude-code");
   const version = require(path.join(repoRoot, "package.json")).version;
+  if (!version || typeof version !== "string") {
+    console.error("Could not read version from package.json");
+    process.exit(1);
+  }
   const destinationDir = path.join(
     os.homedir(),
     ".claude",
@@ -116,8 +132,10 @@ function installClaudeCode(options, repoRoot) {
   if (fs.existsSync(settingsPath)) {
     try {
       settings = JSON.parse(fs.readFileSync(settingsPath, "utf8"));
-    } catch {
-      settings = {};
+    } catch (e) {
+      console.error(`Failed to parse ${settingsPath}: ${e.message}`);
+      console.error("Back up and fix the file, then re-run the installer.");
+      process.exit(1);
     }
   }
   if (!settings.plugins || typeof settings.plugins !== "object") {

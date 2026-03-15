@@ -15,12 +15,11 @@ Is this a new/greenfield project?
 │   ├─ YES → Use deriveSchemaFromMigrations = true (shared migration contract)
 │   └─ NO → Use fresh .sq schema files (simplest path)
 └─ NO (existing production database):
-    ├─ Do you have existing .sqm migration files?
-    │   ├─ YES → Use deriveSchemaFromMigrations = true
-    │   └─ NO → Start fresh .sq files, create initial migration if needed
-    └─ Is the schema changing across releases?
-        ├─ YES → Add .sqm migration files + set deriveSchemaFromMigrations = true
-        └─ NO → Fresh .sq files are fine
+    └─ Do you have existing .sqm migration files?
+        ├─ YES → Use deriveSchemaFromMigrations = true
+        └─ NO → Is the schema changing across releases?
+            ├─ YES → Add .sqm migration files + set deriveSchemaFromMigrations = true
+            └─ NO → Fresh .sq files are fine
 ```
 
 ## deriveSchemaFromMigrations Rules
@@ -43,7 +42,9 @@ Is this a new/greenfield project?
 - OPTIONAL for non-JS targets that want suspend functions
 - When `true`: all generated query methods become `suspend` functions
 - When `true`: use `awaitAsList()`, `awaitAsOne()` instead of `executeAsList()`, `executeAsOne()`
-- CANNOT mix sync and async patterns in the same codebase
+- CANNOT mix sync and async calls on the same database: use `awaitAsList()`/`awaitAsOne()` throughout, not `executeAsList()`
+- Multiple databases in the same project CAN have different generateAsync settings
+- Note: `awaitAsList()` and `awaitAsOne()` require `app.cash.sqldelight:coroutines-extensions` dependency
 
 ## ColumnAdapter Checklist
 
@@ -57,7 +58,7 @@ Is this a new/greenfield project?
 
 Report confidence 1-3, where 3 is highest concern:
 
-- Request mentions `generateAsync` without JS target → Confidence 2: ask if they mean async or just Flow
+- Request mentions `generateAsync` without JS target → Confidence 1: non-JS targets can legitimately use generateAsync for suspend functions; ask if they're using a JS target or intentionally using async APIs
 - Request mentions `verifyMigrations = true` without `schemaOutputDirectory` → Confidence 3: will fail at build time
 - Request mixes `.sq` schema tables AND `deriveSchemaFromMigrations = true` → Confidence 3: conflicting schema sources
 - Request uses `executeAsList()` in async/JS context → Confidence 3: runtime crash
