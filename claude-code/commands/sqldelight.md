@@ -40,7 +40,7 @@ Pass `$ARGUMENTS` as context to each agent so they can tailor their output.
 | `setup` | Launch `project-analyzer`, `driver-selector`, and `config-generator` in parallel |
 | `migration` | Launch `project-analyzer` and `schema-advisor` in parallel |
 | `driver` | Launch `project-analyzer` and `driver-selector` in parallel |
-| `config` | Launch `project-analyzer` first (sequential), then `config-generator` with its output |
+| `config` | Launch `project-analyzer` and `driver-selector` in parallel, then `config-generator` with both outputs |
 | `schema` | Launch `project-analyzer` and `schema-advisor` in parallel |
 | `troubleshoot` | Launch `project-analyzer` and `schema-advisor` in parallel |
 | _(auto-detect)_ | Launch `project-analyzer` first, then dispatch appropriate agents based on findings |
