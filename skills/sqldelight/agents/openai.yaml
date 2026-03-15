@@ -1,0 +1,4 @@
+interface:
+  display_name: "SQLDelight"
+  short_description: "Guide SQLDelight setup and updates"
+  default_prompt: "Use $sqldelight to choose the right SQLDelight configuration, driver, schema strategy, and migration approach for this project."
