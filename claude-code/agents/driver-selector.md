@@ -11,11 +11,11 @@ You are a SQLDelight driver and dialect matrix expert. Your job is to return the
 
 | Platform | Driver artifact | Constructor | Async | Notes |
 |----------|----------------|-------------|-------|-------|
-| Android | android-driver | AndroidSqliteDriver(context, "db.db", schema) | false | |
+| Android | android-driver | AndroidSqliteDriver(schema, context, "app.db") | false | |
 | KMP (Android+iOS) | android-driver (Android), native-driver (iOS/macOS) | AndroidSqliteDriver, NativeSqliteDriver | false | Needs expect/actual SqlDriver factory |
 | KMP (Android+Desktop) | android-driver (Android), sqlite-driver (JVM) | AndroidSqliteDriver, JdbcSqliteDriver | false | Needs expect/actual SqlDriver factory |
 | JVM SQLite | sqlite-driver | JdbcSqliteDriver(DriverManager.getConnection("jdbc:sqlite:db.db")) | false | |
-| JS/Browser | web-worker-driver, @cashapp/sqldelight-sqljs-worker | WebWorkerDriver(SQLite()) | true | MUST enable generateAsync |
+| JS/Browser | web-worker-driver, @cashapp/sqldelight-sqljs-worker | WebWorkerDriver(Worker(...sqljs.worker.js...)) | true | MUST enable generateAsync. Full constructor: `WebWorkerDriver(Worker(js("""new URL("@cashapp/sqldelight-sqljs-worker/sqljs.worker.js", import.meta.url)""")))` |
 | MySQL/JVM | jdbc-driver + mysql-dialect | Use JDBC connection string | false | |
 | PostgreSQL/JVM | jdbc-driver + postgresql-dialect | Use JDBC connection string | false | |
 
@@ -27,8 +27,7 @@ Non-Android SQLite targets — select dialect based on minimum target SDK or run
 
 | SDK range | Dialect artifact |
 |-----------|-----------------|
-| < 21 | sqlite-3-18-dialect |
-| 21–23 | sqlite-3-18-dialect |
+| < 24 | sqlite-3-18-dialect |
 | 24–27 | sqlite-3-24-dialect |
 | 28–29 | sqlite-3-25-dialect |
 | 30–32 | sqlite-3-30-dialect |
