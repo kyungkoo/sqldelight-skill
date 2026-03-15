@@ -28,6 +28,7 @@ Parse `$ARGUMENTS` to determine the operating mode:
 | `config` | Gradle DSL generation only |
 | `schema` | Schema design strategy |
 | `troubleshoot` or `troubleshooting` | Diagnose problems |
+| `audit` | Full code + config audit |
 | _(none of the above)_ | Auto-detect from project scan context |
 
 ## Phase 3: Dispatch agents based on mode
@@ -42,7 +43,8 @@ Pass `$ARGUMENTS` as context to each agent so they can tailor their output.
 | `driver` | Launch `project-analyzer` and `driver-selector` in parallel |
 | `config` | Launch `project-analyzer` and `driver-selector` in parallel, then `config-generator` with both outputs |
 | `schema` | Launch `project-analyzer` and `schema-advisor` in parallel |
-| `troubleshoot` | Launch `project-analyzer` and `schema-advisor` in parallel |
+| `troubleshoot` | Launch `project-analyzer`, `schema-advisor`, and `code-analyzer` in parallel. In Phase 4, lead with the most likely root cause of the user's current problem. |
+| `audit` | Launch `project-analyzer`, `schema-advisor`, and `code-analyzer` in parallel. In Phase 4, present a complete health report — include all findings even if severity is Info. |
 | _(auto-detect)_ | Launch `project-analyzer` first, then dispatch appropriate agents based on findings |
 
 ## Phase 4: Synthesize and present results
@@ -64,14 +66,19 @@ Provide copy-paste ready Gradle DSL (Kotlin DSL by default, Groovy DSL if detect
 - Driver dependency declarations
 - Complete `sqldelight {}` block with database name, package name, and dialect
 
-### 5. Anti-patterns to avoid
+### 5. Code Analysis
+_(Include this section only for `troubleshoot` and `audit` modes)_
+
+[code-analyzer 출력 전체]
+
+### 6. Anti-patterns to avoid
 List common mistakes specific to their platform and setup, such as:
 - Using the wrong driver for a target
 - Missing `generateDatabaseInterface = true` for KMP
 - Placing `.sq` files in the wrong source set
 - Forgetting to configure the dialect
 
-### 6. Official docs
+### 7. Official docs
 Link to the relevant SQLDelight documentation:
 - Getting started: https://cashapp.github.io/sqldelight/
 - Android: https://cashapp.github.io/sqldelight/android_sqlite/
