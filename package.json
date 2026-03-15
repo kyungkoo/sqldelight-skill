@@ -1,13 +1,14 @@
 {
   "name": "sqldelight-skill",
   "version": "0.1.0",
-  "description": "npx installer for the Codex sqldelight skill",
+  "description": "npx installer for the SQLDelight Codex skill and Claude Code plugin",
   "bin": {
     "sqldelight-skill": "./bin/install.js"
   },
   "files": [
     "bin",
     "skills",
+    "claude-code",
     "README.md"
   ],
   "engines": {

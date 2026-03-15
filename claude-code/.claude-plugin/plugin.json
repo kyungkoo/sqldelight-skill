@@ -1,0 +1,5 @@
+{
+  "name": "sqldelight",
+  "description": "SQLDelight assistant for Kotlin projects. Project auto-analysis, setup, driver selection, migration planning, and Gradle config generation.",
+  "author": { "name": "sqldelight-skill contributors", "email": "" }
+}
