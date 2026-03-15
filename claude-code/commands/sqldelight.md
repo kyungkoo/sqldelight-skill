@@ -39,7 +39,7 @@ Pass `$ARGUMENTS` as context to each agent so they can tailor their output.
 | Mode | Agent dispatch strategy |
 |------|------------------------|
 | `setup` | Launch `project-analyzer`, `driver-selector`, and `config-generator` in parallel |
-| `migration` | Launch `project-analyzer` and `schema-advisor` in parallel |
+| `migration` | Launch `project-analyzer`, `schema-advisor`, and `migration-checker` in parallel |
 | `driver` | Launch `project-analyzer` and `driver-selector` in parallel |
 | `config` | Launch `project-analyzer` and `driver-selector` in parallel, then `config-generator` with both outputs |
 | `schema` | Launch `project-analyzer` and `schema-advisor` in parallel |
@@ -66,19 +66,24 @@ Provide copy-paste ready Gradle DSL (Kotlin DSL by default, Groovy DSL if detect
 - Driver dependency declarations
 - Complete `sqldelight {}` block with database name, package name, and dialect
 
-### 5. Code Analysis
+### 5. Migration Check
+_(Include this section only for `migration` and `audit` modes)_
+
+[migration-checker 출력 전체]
+
+### 6. Code Analysis
 _(Include this section only for `troubleshoot` and `audit` modes)_
 
 [code-analyzer 출력 전체]
 
-### 6. Anti-patterns to avoid
+### 7. Anti-patterns to avoid
 List common mistakes specific to their platform and setup, such as:
 - Using the wrong driver for a target
 - Missing `generateDatabaseInterface = true` for KMP
 - Placing `.sq` files in the wrong source set
 - Forgetting to configure the dialect
 
-### 7. Official docs
+### 8. Official docs
 Link to the relevant SQLDelight documentation:
 - Getting started: https://cashapp.github.io/sqldelight/
 - Android: https://cashapp.github.io/sqldelight/android_sqlite/
