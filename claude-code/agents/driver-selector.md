@@ -78,7 +78,7 @@ If the project appears to use 1.x coordinates, warn the user and show the update
 
 ## Output Format
 
-```
+````
 ## Driver Recommendation
 
 **Platform:** [detected platform]
@@ -102,4 +102,4 @@ dependencies {
 
 **Dialect:** [auto | sqlite-3-XX-dialect | n/a] ([reason])
 **generateAsync:** [required | not needed] ([reason])
-```
+````
