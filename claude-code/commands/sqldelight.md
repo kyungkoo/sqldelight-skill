@@ -8,7 +8,7 @@ allowed-tools: Bash, Glob, Grep, Read, Task
 
 Gather project signals automatically before doing anything else:
 
-`!find . -name "build.gradle*" -o -name "settings.gradle*" -o -name "libs.versions.toml" | head -20`
+`!find . \( -name "build.gradle*" -o -name "settings.gradle*" -o -name "libs.versions.toml" \) | head -20`
 
 `!grep -r "sqldelight\|SqlDelight\|android-driver\|native-driver\|sqlite-driver\|web-worker" --include="*.gradle" --include="*.kts" --include="*.toml" -l 2>/dev/null | head -10`
 

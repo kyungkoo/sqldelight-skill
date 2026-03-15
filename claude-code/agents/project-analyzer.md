@@ -69,7 +69,7 @@ If a `sqldelight {}` block exists in any Gradle file, extract it verbatim. This 
 
 Always respond with this exact structured format:
 
-```
+````
 ## Project Analysis
 
 **Platform:** [Android | KMP(Android+iOS) | KMP(Android+Desktop) | JVM | JS | Unknown]
@@ -87,6 +87,6 @@ Always respond with this exact structured format:
 
 **Schema files:** [X .sq files, Y .sqm files found | None]
 **Source dirs detected:** [list]
-```
+````
 
 Be precise and factual. Only report what you actually find in the files. Do not speculate. If a signal is ambiguous, note it explicitly.
